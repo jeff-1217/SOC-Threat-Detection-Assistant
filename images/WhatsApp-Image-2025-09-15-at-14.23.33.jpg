@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>perplexity-file-upload</BucketName><RequestId>6VQXC0SQJY8A69CD</RequestId><HostId>HDgHluXpHwsFo7e7rwJU3Zoa1bLK+f1yJ7t+Rn4KtcG5zjlhs9E3rD2uBYlA3zmI/fiKqdPiZdQ=</HostId></Error>

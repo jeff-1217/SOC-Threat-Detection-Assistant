@@ -1,68 +1,65 @@
-# 🛡️ SOC Threat Detection Agent
+# 🛡️ CrewAI Automated SOC Agent
 
-A blazing-fast, real-time Security Operations Center (SOC) agent that analyzes firewall logs, aggregates threat intelligence from multiple APIs, and leverages the **Groq Llama-3.3-70b** model to generate actionable security recommendations.
-
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![Groq](https://img.shields.io/badge/Groq-f55036?style=for-the-badge&logo=groq&logoColor=white)
+An advanced, autonomous Security Operations Center (SOC) agent built on the **CrewAI** framework. This project utilizes a multi-agent architecture to parse firewall logs, investigate IP addresses using multiple Threat Intelligence APIs, and generate professional security reports.
 
 ## ✨ Features
 
-- **Instant Log Parsing:** Extracts unique IPv4 addresses from complex firewall logs using regex.
-- **Brute Force Detection:** Identifies malicious behavior patterns such as repeated failed SSH/HTTP login attempts.
-- **Threat Intelligence Integration:**
-  - **AbuseIPDB:** Checks IP reputation and malicious confidence scores.
-  - **VirusTotal:** Aggregates findings from 70+ security vendors.
-- **Geolocation:** Maps IPs to physical locations and ISPs to identify suspicious origins.
-- **AI-Powered Analysis:** Uses Groq's lightning-fast inference API (Llama-3.3-70b) to synthesize the gathered data into a concise, human-readable recommendation (Block/Monitor).
-- **Beautiful UI:** Provides a clean, dark-mode web interface built entirely in Streamlit.
+- **Autonomous Agent Workflows:** Uses the `crewai` framework to define specific roles, goals, and tasks for intelligent execution.
+- **Threat Intelligence Integrations:**
+  - **AbuseIPDB:** Analyzes IPs for malicious confidence scores.
+  - **VirusTotal:** Aggregates vendor analysis to determine if an IP is flagged.
+- **Behavioral Analysis:** Uses regex to parse logs for brute force patterns (e.g., repeated SSH/HTTP failures).
+- **Geolocation Data:** Maps IPs to physical locations and Internet Service Providers (ISPs).
+- **LLM Synthesis:** Powered by **Groq** (Llama-3.3-70b) to act as a Senior SOC Analyst, taking raw threat intelligence and writing a final actionable report.
+- **HTML Reporting:** Automatically generates a styled `investigation_report.html` for easy reading and sharing.
 
-## 🚀 How It Works
+## 🧠 The CrewAI Architecture
 
-1. **Input:** Paste raw firewall logs into the web interface.
-2. **Extraction:** The agent instantly parses the logs and extracts all unique IP addresses.
-3. **Enrichment:** For each IP, it concurrently queries VirusTotal, AbuseIPDB, and IP-API.
-4. **Synthesis:** The aggregated data is fed into a specialized SOC Analyst prompt.
-5. **Output:** The Groq LLM streams back a structured report and final determination for each IP.
+This project is structured around the core principles of CrewAI:
+- **Agents:** We define a dedicated `SOC Analyst Agent` whose goal is to act as a senior security researcher.
+- **Tasks:** The agent is assigned a `Threat Analysis Task`, which involves ingesting the firewall logs, looking up the IPs via Python tools, and formatting the output.
+- **Tools:** The agent is equipped with custom tools (API callers) to interface with the outside world (AbuseIPDB, VirusTotal, IP-API).
 
-## 🛠️ Installation & Local Setup
+## 🛠️ Installation & Setup
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/soc-agent-streamlit.git
-   cd soc-agent-streamlit
+   git clone https://github.com/yourusername/crewai-soc-agent.git
+   cd crewai-soc-agent
    ```
 
-2. **Create a virtual environment:**
+2. **Set up a Virtual Environment:**
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   python3 -m venv venv
+   source venv/bin/activate
    ```
 
 3. **Install dependencies:**
    ```bash
-   pip install -r requirements.txt
+   pip install crewai litellm groq requests python-dotenv
    ```
 
-4. **Set up Environment Variables:**
-   Create a `.env` file in the root directory and add your API keys:
+4. **Environment Variables:**
+   Create a `.env` file in the root directory and add your keys:
    ```env
    ABUSEIPDB_API_KEY="your_abuseipdb_key"
    VIRUSTOTAL_API_KEY="your_virustotal_key"
    GROQ_API_KEY="your_groq_key"
+   
+   # Recommended telemetry disable for faster boot times
+   CREWAI_TELEMETRY_OPT_OUT=true
+   LITELLM_TELEMETRY=False
+   LITELLM_DISABLE_VERSION_CHECK=True
    ```
 
-5. **Run the App:**
+## 🚀 Usage
+
+1. **Provide Logs:** Place your firewall logs inside the `firewall.log` file.
+2. **Run the Crew:**
    ```bash
-   streamlit run app.py
+   python soc_agent.py
    ```
-
-## ☁️ Deployment (Streamlit Community Cloud)
-
-1. Push this repository to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io/) and create a New App from your repository.
-3. In the deployment settings, click **Advanced Settings** and paste your `.env` contents into the **Secrets** section.
-4. Click **Deploy**.
+3. **View Report:** The agent will output its thought process to the terminal. Once finished, open `investigation_report.html` in your browser to view the final beautifully formatted security report.
 
 ## 📄 License
 

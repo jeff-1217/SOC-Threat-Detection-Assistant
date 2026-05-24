@@ -1,106 +1,69 @@
-# SOC Threat Detection Assistant
+# 🛡️ SOC Threat Detection Agent
 
-## Project Overview
+A blazing-fast, real-time Security Operations Center (SOC) agent that analyzes firewall logs, aggregates threat intelligence from multiple APIs, and leverages the **Groq Llama-3.3-70b** model to generate actionable security recommendations.
 
-SOC Threat Detection Assistant is an AI-powered security operations center (SOC) tool designed to help security analysts detect, analyze, and respond to potential threats. This assistant leverages machine learning and automated log analysis to identify suspicious activities and provide actionable insights for security teams.
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Groq](https://img.shields.io/badge/Groq-f55036?style=for-the-badge&logo=groq&logoColor=white)
 
-The system processes firewall logs, analyzes network traffic patterns, and uses intelligent agents to flag potential security incidents, making threat detection more efficient and reducing the workload on security analysts.
+## ✨ Features
 
-## Setup Instructions
+- **Instant Log Parsing:** Extracts unique IPv4 addresses from complex firewall logs using regex.
+- **Brute Force Detection:** Identifies malicious behavior patterns such as repeated failed SSH/HTTP login attempts.
+- **Threat Intelligence Integration:**
+  - **AbuseIPDB:** Checks IP reputation and malicious confidence scores.
+  - **VirusTotal:** Aggregates findings from 70+ security vendors.
+- **Geolocation:** Maps IPs to physical locations and ISPs to identify suspicious origins.
+- **AI-Powered Analysis:** Uses Groq's lightning-fast inference API (Llama-3.3-70b) to synthesize the gathered data into a concise, human-readable recommendation (Block/Monitor).
+- **Beautiful UI:** Provides a clean, dark-mode web interface built entirely in Streamlit.
 
-### Prerequisites
-- Python 3.7 or higher
-- pip package manager
+## 🚀 How It Works
 
-### Installation
+1. **Input:** Paste raw firewall logs into the web interface.
+2. **Extraction:** The agent instantly parses the logs and extracts all unique IP addresses.
+3. **Enrichment:** For each IP, it concurrently queries VirusTotal, AbuseIPDB, and IP-API.
+4. **Synthesis:** The aggregated data is fed into a specialized SOC Analyst prompt.
+5. **Output:** The Groq LLM streams back a structured report and final determination for each IP.
 
-1. Clone this repository:
+## 🛠️ Installation & Local Setup
+
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/jeff-1217/SOC-Threat-Detection-Assistant.git
-   cd SOC-Threat-Detection-Assistant
+   git clone https://github.com/yourusername/soc-agent-streamlit.git
+   cd soc-agent-streamlit
    ```
 
-2. Install required dependencies:
+2. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-   The `requirements.txt` file contains all necessary Python packages and their versions needed to run the SOC Threat Detection Assistant.
+4. **Set up Environment Variables:**
+   Create a `.env` file in the root directory and add your API keys:
+   ```env
+   ABUSEIPDB_API_KEY="your_abuseipdb_key"
+   VIRUSTOTAL_API_KEY="your_virustotal_key"
+   GROQ_API_KEY="your_groq_key"
+   ```
 
-3. Ensure you have access to firewall log files for analysis.
+5. **Run the App:**
+   ```bash
+   streamlit run app.py
+   ```
 
-## Usage Example
+## ☁️ Deployment (Streamlit Community Cloud)
 
-To start the SOC threat detection agent, use the `soc_agent.py` script:
+1. Push this repository to GitHub.
+2. Go to [share.streamlit.io](https://share.streamlit.io/) and create a New App from your repository.
+3. In the deployment settings, click **Advanced Settings** and paste your `.env` contents into the **Secrets** section.
+4. Click **Deploy**.
 
-```bash
-python soc_agent.py
-```
+## 📄 License
 
-### Basic Usage
-
-```python
-# Example: Running the SOC agent with default settings
-python soc_agent.py
-
-# The agent will automatically:
-# - Load and parse firewall.log
-# - Analyze traffic patterns
-# - Identify potential threats
-# - Generate security alerts
-```
-
-### Advanced Usage
-
-You can also import and use the SOC agent in your own scripts:
-
-```python
-from soc_agent import SOCAgent
-
-# Initialize the agent
-agent = SOCAgent()
-
-# Analyze logs
-agent.analyze_logs('firewall.log')
-
-# Get threat report
-report = agent.generate_report()
-print(report)
-```
-
-## Firewall Log (firewall.log)
-
-The `firewall.log` file contains network traffic data and firewall events that the SOC Threat Detection Assistant analyzes. This log file typically includes:
-
-- **Source and destination IP addresses**: Tracking network connections
-- **Port numbers**: Identifying services and protocols being accessed
-- **Timestamps**: When events occurred for temporal analysis
-- **Action taken**: Whether traffic was allowed or blocked
-- **Protocol information**: TCP, UDP, ICMP, etc.
-
-The firewall log serves as the primary data source for threat detection. The SOC agent processes this log to:
-- Detect anomalous traffic patterns
-- Identify potential intrusion attempts
-- Flag suspicious port scanning activities
-- Monitor for data exfiltration attempts
-- Track blocked connection attempts that may indicate attack vectors
-
-### Log Format
-
-Ensure your firewall.log follows a standard format that the agent can parse. Common formats supported include syslog, CEF (Common Event Format), and custom delimited formats.
-
-## Features
-
-- Automated log parsing and analysis
-- Real-time threat detection
-- Intelligent pattern recognition
-- Security alert generation
-- Comprehensive reporting
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
-
-## License
-
-This project is available for use in security operations and threat detection scenarios.
+This project is open-source and available under the MIT License.

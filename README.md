@@ -1,4 +1,4 @@
-# 🛡️ CrewAI Automated SOC Agent
+# CrewAI Automated SOC Agent
 
 An advanced, autonomous Security Operations Center (SOC) agent built on the **CrewAI** framework. This project utilizes a multi-agent architecture to parse firewall logs, investigate IP addresses using multiple Threat Intelligence APIs, and generate professional security reports.
 
@@ -46,11 +46,6 @@ This project is structured around the core principles of CrewAI:
    VIRUSTOTAL_API_KEY="your_virustotal_key"
    GROQ_API_KEY="your_groq_key"
    
-   # Recommended telemetry disable for faster boot times
-   CREWAI_TELEMETRY_OPT_OUT=true
-   LITELLM_TELEMETRY=False
-   LITELLM_DISABLE_VERSION_CHECK=True
-   ```
 
 ## 🚀 Usage
 
